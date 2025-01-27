@@ -1,0 +1,15 @@
+FROM jboss/wildfly:latest
+
+# Set environment variables
+ENV JAVA_OPTS="-Xms512m -Xmx1024m"
+ENV HA_CONFIG_FILE=standalone-ha.xml
+
+# Copy your custom configuration
+COPY standalone-ha.xml /opt/jboss/wildfly/standalone/configuration/
+
+# Expose necessary ports (e.g., 8080 for HTTP, 9990 for admin)
+EXPOSE 8080 9990
+
+# Run the WildFly server in HA mode
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone-ha.xml", "--server-config=standalone-ha.xml"]
+
